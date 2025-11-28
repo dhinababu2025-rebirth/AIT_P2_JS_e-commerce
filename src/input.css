@@ -5,10 +5,20 @@
 	@source "../**/*.{html,js}";
 	
 /*Activate Tailwind in Code Editor:*/
-    /* C:/cli-tools/tailwindcss -i src/input.css -o dist/output.css --watch */
+/* 
+C:/cli-tools/tailwindcss -i src/input.css -o dist/output.css --watch
+*/
 
 /* Your custom utilities */
 /* .all-buttons {
     @apply p-2 w-14 border;
     } 
 */
+
+.header-items {
+    @apply p-1 m-1;
+}
+.bottom-shade {
+    @apply shadow-[0_3px_6px_rgba(0,0,0,0.3)];
+}
+
