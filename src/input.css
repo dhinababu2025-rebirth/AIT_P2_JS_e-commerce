@@ -21,4 +21,7 @@ C:/cli-tools/tailwindcss -i src/input.css -o dist/output.css --watch
 .bottom-shade {
     @apply shadow-[0_3px_6px_rgba(0,0,0,0.3)];
 }
+.product-categories {
+    @apply px-2 py-1 m-4 border rounded-md w-fit text-nowrap hover:cursor-pointer;
+}
 
