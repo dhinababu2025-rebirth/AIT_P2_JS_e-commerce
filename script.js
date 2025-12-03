@@ -62,8 +62,8 @@ function createCard(title, img, desc, price) {
 // createCard("Watch", "https://via.placeholder.com/100", "Premium watch.");
 
 // Get all products.
-  // 1. Define an async function
-  async function getProducts() {
+// 1. Define an async function
+async function getProducts() {
   // Now 'await' is allowed inside here
   // Step 1: Requesting the data
   const response = await fetch('https://fakestoreapi.com/products');
@@ -72,36 +72,52 @@ function createCard(title, img, desc, price) {
   products = data; 
   // 'products' now holds the memory address of the Array containing all the objects recieved via api.
   for (let product of products) { // Accesses memory to find all the keys and values in each object
-  for(let key in product) {
-      console.log(key+": "+product[key]);
-  } 
+    for(let key in product) {
+        console.log(key+": "+product[key]); //not main logic: only to verify data in console log
+    } 
     createCard(product.title, product.image, product.description, product.price);
   }
+}
+
+// Function to Remove all products form the container
+function removeProducts() {
+  const clrContainer = document.getElementById("card-container");
+  clrContainer.innerHTML = '';
+}
+
+// Function to customize the product list
+function customProductList(categoryValue) {
+  for (let product of products) { // Accesses memory to find all the keys and values in each object
+    if(product.category === categoryValue) {
+      createCard(product.title, product.image, product.description, product.price);
+    }
   }
-  function removeProducts() {
-    const clrContainer = document.getElementById("card-container");
-    clrContainer.innerHTML = '';
-  }
-// 2. Call the function
+}
+
+// Load all products on page load
  getProducts();
- document.getElementById("mens-products").addEventListener('click', () => {
+
+// List the products based on customized options
+// Men's Clothing
+  document.getElementById("mens-products").addEventListener('click', () => {
     removeProducts();
-    for (let product of products) { // Accesses memory to find all the keys and values in each object
-      if(product.category === "men's clothing") {
-        createCard(product.title, product.image, product.description, product.price);
-      }
-    }
+    customProductList("men's clothing");
   });
- document.getElementById("womens-products").addEventListener('click', () => {
+// Women's Clothing
+  document.getElementById("womens-products").addEventListener('click', () => {
     removeProducts();
-    for (let product of products) { // Accesses memory to find all the keys and values in each object
-      if(product.category === "women's clothing") {
-        createCard(product.title, product.image, product.description, product.price);
-      }
-    }
+    customProductList("women's clothing");
   });
- document.getElementById("jewelery-products")
- document.getElementById("electronic-products");
+// Jewelery
+ document.getElementById("jewelery-products").addEventListener('click', () => {
+    removeProducts();
+    customProductList("jewelery");
+  });
+// Electronics
+ document.getElementById("electronic-products").addEventListener('click', () => {
+    removeProducts();
+    customProductList("electronics");
+  });
 
 
 
