@@ -10,7 +10,7 @@
 
 const header = document.getElementById("main-header");
 let lastScrollY = window.scrollY;
-
+let products = null;
 window.addEventListener("scroll", () => {
     // 1. Get current scroll position
     const currentScrollY = window.scrollY;
@@ -30,6 +30,15 @@ window.addEventListener("scroll", () => {
 
     // 3. Update last scroll position for the next event loop
     lastScrollY = currentScrollY;
+});
+
+const productsLink = document.getElementById("products-link");
+productsLink.addEventListener('click', () => {
+  document.getElementById("products-title").textContent = "Products";
+});
+const homeLink = document.getElementById("home-link");
+homeLink.addEventListener('click', () => {
+  document.getElementById("products-title").textContent = "Latest Products";
 });
 
 function createCard(title, img, desc, price) {
@@ -52,26 +61,49 @@ function createCard(title, img, desc, price) {
 // createCard("Bag", "https://via.placeholder.com/100", "A nice bag.");
 // createCard("Watch", "https://via.placeholder.com/100", "Premium watch.");
 
+// Get all products.
+  // 1. Define an async function
+  async function getProducts() {
+  // Now 'await' is allowed inside here
+  // Step 1: Requesting the data
+  const response = await fetch('https://fakestoreapi.com/products');
+  // Step 2: Parsing the stream
+  const data = await response.json();
+  products = data; 
+  // 'products' now holds the memory address of the Array containing all the objects recieved via api.
+  for (let product of products) { // Accesses memory to find all the keys and values in each object
+  for(let key in product) {
+      console.log(key+": "+product[key]);
+  } 
+    createCard(product.title, product.image, product.description, product.price);
+  }
+  }
+  function removeProducts() {
+    const clrContainer = document.getElementById("card-container");
+    clrContainer.innerHTML = '';
+  }
+// 2. Call the function
+ getProducts();
+ document.getElementById("mens-products").addEventListener('click', () => {
+    removeProducts();
+    for (let product of products) { // Accesses memory to find all the keys and values in each object
+      if(product.category === "men's clothing") {
+        createCard(product.title, product.image, product.description, product.price);
+      }
+    }
+  });
+ document.getElementById("womens-products").addEventListener('click', () => {
+    removeProducts();
+    for (let product of products) { // Accesses memory to find all the keys and values in each object
+      if(product.category === "women's clothing") {
+        createCard(product.title, product.image, product.description, product.price);
+      }
+    }
+  });
+ document.getElementById("jewelery-products")
+ document.getElementById("electronic-products");
 
-            // 1. Define an async function
-            async function getProducts() {
-              // Now 'await' is allowed inside here
-            // Step 1: Requesting the data
-            const response = await fetch('https://fakestoreapi.com/products');
-            // Step 2: Parsing the stream
-            const data = await response.json();
-            let products = data; 
-            // 'products' now holds the memory address of the Array containing all the objects recieved via api.
-            for (let product of products) { // Accesses memory to find all the keys and values in each object
-              for(let key in product) {
-                console.log(key+": "+product[key]);
-              } 
-              createCard(product.title, product.image, product.description, product.price);
-            }
 
-            }
 
-            // 2. Call the function
-            getProducts();
 
             

@@ -13,10 +13,10 @@
         <a href="./index.html" class="header-items font-extrabold text-2xl">eCommerce</a>
     </div>
     <nav>
-        <a href="#" class="header-items">Home</a>
-        <a href="#" class="header-items">Products</a>
-        <a href="#" class="header-items">About</a>
-        <a href="#" class="header-items">Contact</a>
+        <a href="./index.html" id="home-link" class="header-items">Home</a>
+        <a href="#latest-products" id="products-link" class="header-items">Products</a>
+        <a href="#" id="about-link" class="header-items">About</a>
+        <a href="#" id="contact-link" class="header-items">Contact</a>
     </nav>
     <div>
         <a href="" class="header-items border rounded-md"><i class="fa-solid fa-user"></i> <span class="max-md:hidden max-sm:hidden"> Login</span></a>
@@ -35,8 +35,8 @@
 </section>
 
 <!-- Title : Latest Products -->
-<div class="border-b w-10/12 border-b-neutral-300 place-self-center mt-8 mb-12 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
-    <p class="text-5xl text-center max-sm:text-2xl max-sm:font-bold">Latest Products</p>
+<div id="latest-products" class="border-b w-10/12 border-b-neutral-300 place-self-center mt-8 mb-12 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
+    <p id="products-title" class="text-5xl text-center max-sm:text-2xl max-sm:font-bold">Latest Products</p>
 </div>
 <!-- Product Navigation -->
 <section class="sticky top-0 bg-white bottom-shade">
@@ -52,7 +52,7 @@
 <!-- Products from store API -->
 <section>
 <template id="product-card-template" class="w-fit h-fit">
-  <div class="product-card border border-gray-300 rounded-md m-4 max-w-72 max-h-96 justify-self-center">
+  <div class="product-card border shadow-lg border-gray-300 rounded-md m-4 max-w-72 min-w-72 max-h-96 min-h-96 justify-self-center">
     <img class="product-img p-1 w-auto min-h-7/12 max-h-7/12 justify-self-center" src="" alt="">
     <h3 class="product-title w-auto max-h-7 overflow-hidden font-bold text-center"></h3>
     <p class="product-description w-auto max-h-13 overflow-hidden text-center"></p>

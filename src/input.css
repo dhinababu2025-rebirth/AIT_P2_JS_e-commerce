@@ -19,7 +19,8 @@ C:/cli-tools/tailwindcss -i src/input.css -o dist/output.css --watch
     @apply p-1 m-1;
 }
 .bottom-shade {
-    @apply shadow-[0_3px_6px_rgba(0,0,0,0.3)];
+    /* @apply shadow-[0_3px_6px_rgba(0,0,0,0.3)]; */
+    @apply shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)];
 }
 .product-categories {
     @apply px-2 py-1 m-4 border rounded-md w-fit text-nowrap hover:cursor-pointer;
