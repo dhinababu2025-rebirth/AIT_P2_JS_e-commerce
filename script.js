@@ -32,6 +32,7 @@ window.addEventListener("scroll", () => {
     lastScrollY = currentScrollY;
 });
 
+// Dynamic title of "Latest Products / Products"
 const productsLink = document.getElementById("products-link");
 productsLink.addEventListener('click', () => {
   document.getElementById("products-title").textContent = "Products";
@@ -41,30 +42,33 @@ homeLink.addEventListener('click', () => {
   document.getElementById("products-title").textContent = "Latest Products";
 });
 
+// Function to create a card from templete & append into the container, by getting a product's details. 
 function createCard(title, img, desc, price) {
-
-    // Get template content
+    // Get template content - containg the product card
     const template = document.getElementById("product-card-template");
+    // create the product card
     const card = template.content.cloneNode(true);
-
     // Insert data
     card.querySelector(".product-title").textContent = title;
     card.querySelector(".product-img").src = img;
     card.querySelector(".product-description").textContent = desc;
     card.querySelector(".product-price").textContent = "$ "+price;
-
     // Add card to page
     document.getElementById("card-container").appendChild(card);
 }
 
-// Example usage
-// createCard("Bag", "https://via.placeholder.com/100", "A nice bag.");
-// createCard("Watch", "https://via.placeholder.com/100", "Premium watch.");
+// Function to Remove all products form the container
+function removeProducts() {
+  const clrContainer = document.getElementById("card-container");
+  clrContainer.innerHTML = '';
+}
 
-// Get all products.
+// Function to Get all products from external API, and send them to createCard function.
 // 1. Define an async function
-async function getProducts() {
+async function getAllProducts() {
   // Now 'await' is allowed inside here
+  //reset the container
+  removeProducts();
   // Step 1: Requesting the data
   const response = await fetch('https://fakestoreapi.com/products');
   // Step 2: Parsing the stream
@@ -79,12 +83,6 @@ async function getProducts() {
   }
 }
 
-// Function to Remove all products form the container
-function removeProducts() {
-  const clrContainer = document.getElementById("card-container");
-  clrContainer.innerHTML = '';
-}
-
 // Function to customize the product list
 function customProductList(categoryValue) {
   for (let product of products) { // Accesses memory to find all the keys and values in each object
@@ -95,9 +93,14 @@ function customProductList(categoryValue) {
 }
 
 // Load all products on page load
- getProducts();
+ getAllProducts();
 
 // List the products based on customized options
+// All Products
+  document.getElementById("all-products").addEventListener('click', () => {
+    removeProducts();
+    getAllProducts();
+  });
 // Men's Clothing
   document.getElementById("mens-products").addEventListener('click', () => {
     removeProducts();
