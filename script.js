@@ -1,38 +1,32 @@
-// const header = document.getElementById("main-header");
-
-// window.addEventListener("scroll", () => {
-//   if (window.scrollY > 0) {
-//     header.classList.add("bottom-shade");
-//   } else {
-//     header.classList.remove("bottom-shade");
-//   }
-// });
-
-const header = document.getElementById("main-header");
+// Making product navigation hide/show based on scrollY direction
 let lastScrollY = window.scrollY;
-let products = null;
-// if(cartProducts) {}
-//let cartProducts = [];
+const productNavigation = document.getElementById('product-navigation');
+
+// Get the height of the main header/area above the product navigation (16 * 4 = 64px, assuming base 4px rem scale)
+// You might need to measure this more accurately if 'top-16' isn't precise enough
+const stickyLimit = 600; 
+
 window.addEventListener("scroll", () => {
-    // 1. Get current scroll position
     const currentScrollY = window.scrollY;
 
-    // 2. Determine Direction
-    // If current > last, we are scrolling DOWN.
-    // We also check if scrollY > 0 to prevent glitching at the very top.
-    if (currentScrollY > lastScrollY && currentScrollY > 0) {
-        // Apply Tailwind class to move header up (out of view)
-        header.classList.add("-translate-y-full"); 
-        header.classList.add("bottom-shade");
-    } else {
-        // We are scrolling UP. Remove the class to bring header back.
-        header.classList.remove("-translate-y-full");
-        header.classList.remove("bottom-shade");
+    // Only apply the smart-header logic IF we have scrolled past the point where it would be sticky
+    if (currentScrollY > stickyLimit) {
+        if (currentScrollY > lastScrollY) {
+            // Scrolling DOWN: Hide it completely
+            productNavigation.classList.add("-translate-y-full"); 
+        } else {
+            // Scrolling UP: Show it smoothly
+            productNavigation.classList.remove("-translate-y-full");
+        }
+    } 
+    // Optional: Ensure it's always visible when you are back near the top of the page
+    else {
+         productNavigation.classList.remove("-translate-y-full");
     }
 
-    // 3. Update last scroll position for the next event loop
     lastScrollY = currentScrollY;
 });
+
 
 // Dynamic title of "Latest Products / Products"
 const productsLink = document.getElementById("products-link");
@@ -103,7 +97,19 @@ function customProductList(categoryValue) {
 function topViewOfList() {
   const targetElement = document.getElementById('card-container');
   if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Get the element's position relative to the viewport
+    const elementPosition = targetElement.getBoundingClientRect().top;
+    
+    // Calculate the desired final scroll position
+    // window.scrollY gives current vertical position
+    // We add the element's position (which might be negative if already scrolled past)
+    // and subtract the desired offset (120px)
+    const offsetPosition = elementPosition + window.scrollY - 130;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });  
   }
 }
 
