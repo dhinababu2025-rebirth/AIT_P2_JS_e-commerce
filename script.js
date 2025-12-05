@@ -11,7 +11,8 @@
 const header = document.getElementById("main-header");
 let lastScrollY = window.scrollY;
 let products = null;
-let cartProducts = [];
+// if(cartProducts) {}
+//let cartProducts = [];
 window.addEventListener("scroll", () => {
     // 1. Get current scroll position
     const currentScrollY = window.scrollY;
@@ -150,25 +151,28 @@ function topViewOfList() {
 document.getElementById("card-container").addEventListener('click', (event) => {
     // Check if the element clicked (event.target) has the class 'add-cart-btn'
     if (event.target && event.target.classList.contains('add-cart-btn')) {
-        // 'categoryValue' is a non-standard property you assigned, a better practice is to use a data attribute (data-product-id)
+      // 'categoryValue' is a non-standard property you assigned, a better practice is to use a data attribute (data-product-id)
 
-        // const productId = parseInt(event.target.dataset.productId);  // another method to get id
-        const productId = parseInt(event.target.getAttribute('data-product-id'));
+      // const productId = parseInt(event.target.dataset.productId);  // another method to get id
+      const productId = parseInt(event.target.getAttribute('data-product-id'));
 
-        // Use the globally available 'products' array to find the match
-        const product = products.find(obj => obj.id === productId);
-
-        if (product) {
-            // Call your function to add to cart
-            // createCardInCart(product.image, product.title, product.price);
-            cartProducts.push(product);
-            // Convert the cartProducts array into a JSON string
-            const cartProductsString = JSON.stringify(cartProducts);
-            localStorage.setItem('products-in-cart',cartProductsString);
-            console.log(`Added product ${productId} to cart.`);
-        }
+      // Use the globally available 'products' array to find the match
+      const product = products.find(obj => obj.id === productId);
+ 
+      if (product) {
+        // the existing products will be in json formatted objects as a single string "[{p1},{p2},{p3}..]"
+        // so it's required to parse it's value into objects, as the data is fetched from the local storage
+        let existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
+        // Adding the newly selected product object into the array of existing products in the cart
+        existingCartProducts.push(product);
+        const updatedCartProductsString = JSON.stringify(existingCartProducts);
+        localStorage.setItem('products-in-cart',updatedCartProductsString);
+        //cartProductsString += oldCartProductsString; // this is wrong.. json won't support this resulting data format, "[]"+"[]" = "[][]"
+      } 
+        console.log(`Added product ${productId} to cart.`);
+      
     }
-});
+  });
 
 
 

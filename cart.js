@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cartProducts = JSON.parse(storedCartString);
 
         if (cartProducts.length > 0) {
-            removeCartProducts(); // Clear any placeholder content
+            // removeCartProducts(); // Clear any placeholder content
 
             // 3. Loop through the array and create HTML elements for each product
             cartProducts.forEach(product => {
