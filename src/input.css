@@ -14,7 +14,9 @@ C:/cli-tools/tailwindcss -i src/input.css -o dist/output.css --watch
     @apply p-2 w-14 border;
     } 
 */
-
+#main-header {
+    @apply bg-gray-100;
+}
 .header-items {
     @apply p-1 m-1;
 }

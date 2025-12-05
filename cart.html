@@ -25,7 +25,76 @@
     </div>
 </header>
 
+<main>
+<!-- Title : Cart -->
+<div class="border-b w-10/12 border-b-neutral-300 place-self-center mt-16 mb-8 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
+    <p class="text-5xl font-bold text-center max-sm:text-2xl max-sm:font-bold">Cart</p>
+</div>
 
+<!-- Card Template to list products in the Cart - targeted for div{id: cart-container} -->
+<template id="product-card-in-cart">
+    <div class="flex justify-evenly align-middle h-24">
+        <div class="w-1/5">
+            <img class="product-image-in-cart h-24 p-2 rounded-b-md" src="" alt="product-image">
+        </div>
+        <div class="w-1/2 text-center place-self-center font-bold">
+            <p class="product-title-in-cart"></p>
+        </div>
+        <div class="w-1/4 flex flex-col justify-evenly">
+            <div class="flex justify-around">
+                <button class="decrease-product-quantity">-</button>
+                <p class="qty-of-current-product">0</p>
+                <button class="increase-product-quantity">+</button>
+            </div>
+            <div class="flex justify-center"> 
+                <p class="qty-of-current-product font-bold text-slate-600">
+                0    <!-- no of units of the selected product -->
+                </p>
+                <!-- <p> * </p>  -->
+                <p class="unit-price-of-current-product font-bold">
+                    price
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr class="border border-gray-300 w-4/5 m-4 place-self-center">
+</template>
+
+<!-- Tabular View: (products in cart, order summary) -->
+<div class="flex justify-center gap-8">
+    <!-- Table: Products in cart -->
+    <div class="w-7/12">
+        <!-- Table heading: Items List -->
+        <p class="py-6 px-4 bg-gray-400 rounded-t-md font-bold text-2xl text-center">Item List</p>
+<!-- Container to dynamically hold the cart items -->
+        <div id="products-in-cart-container" class="border border-gray-400 rounded-b-md h-fit mb-4">
+
+        </div>
+    </div>
+    <!-- Table: Order Summary -->
+    <div class="w-3/12">
+        <!-- Table heading: Order Summary -->
+        <p class="py-6 px-4 bg-gray-400 rounded-t-md font-bold text-2xl text-center">Order Summary</p>
+        <!-- Dynamic calculations of total price -->
+        <div id="order-summary" class="border border-gray-400 p-2 rounded-b-md h-fit">
+            <div class="flex justify-between p-2 m-1">
+                <p>Products(<span>0</span>)</p>
+                <p>$0</p>
+            </div>
+            <div class="flex justify-between p-2 m-1">
+                <p>Shipping</p>
+                <p>$30</p>
+            </div>
+            <div class="flex justify-between p-2 m-1">
+                <p>Total Amount</p>
+                <p>$0</p>
+            </div>
+            <div class="flex justify-center mt-4">
+                <button class="bg-black text-white p-2 rounded-md w-full">Go To Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -36,5 +105,6 @@
 </footer> -->
 <script src="https://kit.fontawesome.com/d314a677b2.js" crossorigin="anonymous"></script>
 <script src="./script.js"></script>
+<script src="./cart.js"></script>
 </body>
 </html>

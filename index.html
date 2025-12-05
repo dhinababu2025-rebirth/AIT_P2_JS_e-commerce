@@ -35,11 +35,11 @@
 </section>
 
 <!-- Title : Latest Products -->
-<div id="latest-products" class="border-b w-10/12 border-b-neutral-300 place-self-center mt-8 mb-12 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
+<div id="latest-products" class="border-b w-10/12 border-b-neutral-300 place-self-center my-8 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
     <p id="products-title" class="text-5xl text-center max-sm:text-2xl max-sm:font-bold">Latest Products</p>
 </div>
 <!-- Product Navigation -->
-<section class="sticky top-0 bg-white bottom-shade">
+<section id="product-navigation" class="sticky top-0 bg-white mb-8 bottom-shade">
     <div class="flex justify-center max-sm:overflow-x-scroll max-sm:justify-start max-sm:max-h-16">
         <button id="all-products" class="product-categories">All</button>
         <button id="mens-products" class="product-categories">Men's Clothing</button>
@@ -61,10 +61,12 @@
         <button class="details-btn p-1 border rounded-md bg-black text-white font-bold hover:bg-slate-400 hover:text-green-950 hover:cursor-pointer">Details</button>
         <button class="add-cart-btn p-1 border rounded-md bg-black text-white font-bold hover:bg-slate-400 hover:text-green-950 hover:cursor-pointer">Add to Cart</button>
     </div>
+            <!-- hidden data for easy search of products -->
+            <p class="product-id hidden"></p>
   </div>
 </template>
 
-    <div id="card-container" class="grid justify-evenly grid-cols-3 max-sm:grid-cols-1 max-md:grid-cols-2">
+    <div id="card-container" class="mt-24 grid justify-evenly grid-cols-3 max-sm:grid-cols-1 max-md:grid-cols-2">
         
     </div>
 
