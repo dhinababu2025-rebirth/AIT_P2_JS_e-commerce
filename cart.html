@@ -8,45 +8,61 @@
     <link rel="icon" href="./images/logo-eCom.png" type="image/png">
 </head>
 <body>
-<header id="main-header" class="fixed top-0 left-0 w-full z-50 flex justify-between p-4 bg-white transition-transform duration-300">
-    <div>
-        <a href="./index.html" class="header-items font-extrabold text-2xl">eCommerce</a>
-    </div>
-    <nav>
-        <a href="./index.html" id="home-link" class="header-items">Home</a>
-        <a href="#latest-products" id="products-link" class="header-items">Products</a>
-        <a href="./about.html" id="about-link" class="header-items">About</a>
-        <a href="./contact.html" id="contact-link" class="header-items">Contact</a>
-    </nav>
-    <div>
-        <a href="./login.html" class="header-items border rounded-md"><i class="fa-solid fa-user"></i> <span class="max-md:hidden max-sm:hidden"> Login</span></a>
-        <a href="./register.html" class="header-items border rounded-md"><i class="fa-solid fa-user-plus"></i> <span class="max-md:hidden max-sm:hidden"> Register</span></a>
-        <a href="./cart.html" class="bg-slate-950 text-white py-2 header-items border rounded-md"><i class="fa-solid fa-cart-shopping"></i> <span class="max-md:hidden max-sm:hidden"> Cart </span>(<span id="products-in-cart">0</span>)</a>
-    </div>
+<header id="main-header" 
+        class="bottom-shade fixed top-0 left-0 w-full z-50 p-4 max-sm:p-1 bg-white flex justify-between max-sm:flex-col">
+    <!-- main header: column 1 -->
+        <div class="max-sm:justify-self-center pb-2 text-center">
+            <a href="./index.html" class="header-items font-extrabold text-2xl">eCommerce</a>
+        </div>
+    <!-- main header: column 2 -->
+        <nav class="max-sm:hidden text-center pt-2">
+            <a href="./index.html" id="home-link" class="header-items">Home</a>
+            <a href="./product.html" id="products-link" class="header-items">Products</a>
+            <a href="./about.html" id="about-link" class="header-items">About</a>
+            <a href="./contact.html" id="contact-link" class="header-items">Contact</a>
+        </nav>
+    <!-- main header: column 3 -->
+        <div class="flex justify-between">
+            <button id="mobile-menu-btn" class="hidden max-sm:block p-1 max-sm:w-1/4">
+                <i class="fa-solid fa-list border text-2xl rounded-md"></i>
+            </button>
+            <div class="max-sm:w-3/4 flex justify-end">
+                <a href="./login.html" class="header-items border rounded-md"><i class="fa-solid fa-user"></i> <span class="max-md:hidden max-sm:hidden"> Login</span></a>
+                <a href="./register.html" class="header-items border rounded-md"><i class="fa-solid fa-user-plus"></i> <span class="max-md:hidden max-sm:hidden"> Register</span></a>
+                <a href="./cart.html" class="header-items border rounded-md"><i class="fa-solid fa-cart-shopping"></i> <span class="max-md:hidden max-sm:hidden"> Cart </span>(<span id="products-in-cart">0</span>)</a>
+            </div>
+        </div>
+    
+</div>
 </header>
-
 <main>
 <!-- Title : Cart -->
-<div class="border-b w-10/12 border-b-neutral-300 place-self-center mt-16 mb-8 pt-4 pb-4 max-sm:mb-0 max-sm:mt-0">
+<div class="border-b w-10/12 border-b-neutral-300 place-self-center mt-16 mb-8 pt-4 pb-4 max-sm:mb-6 max-sm:mt-24">
     <p class="text-5xl font-bold text-center max-sm:text-2xl max-sm:font-bold">Cart</p>
 </div>
 
 <!-- Card Template to list products in the Cart - targeted for div{id: cart-container} -->
 <template id="product-card-in-cart">
-    <div class="flex justify-evenly align-middle h-24">
-        <div class="w-1/5">
+    <div class="flex justify-evenly max-sm:flex-col p-2 h-fit">
+        <!-- Product image and title -->
+        <div class="flex justify-evenly w-8/12 max-sm:w-full">
+            <div class="w-1/5">
             <img class="product-image-in-cart h-24 p-2 rounded-b-md" src="" alt="product-image">
-        </div>
-        <div class="w-1/2 text-center place-self-center font-bold">
-            <p class="product-title-in-cart"></p>
-        </div>
-        <div class="w-1/4 flex flex-col justify-evenly">
-            <div class="flex justify-around">
-                <button class="decrease-product-quantity">-</button>
-                <p class="qty-of-current-product">0</p>
-                <button class="increase-product-quantity">+</button>
             </div>
-            <div class="flex justify-center"> 
+            <div class="w-1/2 text-center place-self-center font-bold">
+                <p class="product-title-in-cart"></p>
+            </div>
+        </div>
+        <!-- Product quantity and price -->
+        <div class="w-1/4 flex flex-col max-sm:w-full max-sm:flex-row max-sm:justify-around justify-center">
+            <!-- product quantity -->
+            <div class="flex justify-around items-center max-sm:order-2">
+                <button class="decrease-product-quantity bg-amber-700 rounded-md text-white px-4 pb-1 mx-1 h-fit text-center text-2xl">-</button>
+                <p class="qty-of-current-product font-bold text-2xl mx-1 my-0">0</p>
+                <button class="increase-product-quantity bg-cyan-400 rounded-md text-white px-4 pb-1 mx-1 h-fit text-2xl">+</button>
+            </div>
+            <!-- product price -->
+            <div class="flex justify-center max-sm:order-1"> 
                 <p class="qty-of-current-product font-bold text-slate-600">
                 0    <!-- no of units of the selected product -->
                 </p>
@@ -61,9 +77,9 @@
 </template>
 
 <!-- Tabular View: (products in cart, order summary) -->
-<div class="flex justify-center gap-8">
-    <!-- Table: Products in cart -->
-    <div class="w-7/12">
+<div class="flex justify-center max-sm:items-center gap-8 max-sm:flex-col max-sm:justify-center max-sm:align-middle">
+    <!-- Table 1: Products in cart -->
+    <div class="w-7/12 max-sm:w-10/12 max-sm:h-80 max-sm:overflow-scroll">
         <!-- Table heading: Items List -->
         <p class="py-6 px-4 bg-gray-400 rounded-t-md font-bold text-2xl text-center">Item List</p>
 <!-- Container to dynamically hold the cart items -->
@@ -71,8 +87,8 @@
 
         </div>
     </div>
-    <!-- Table: Order Summary -->
-    <div class="w-3/12">
+    <!-- Table 2: Order Summary -->
+    <div class="w-3/12 max-sm:w-10/12">
         <!-- Table heading: Order Summary -->
         <p class="py-6 px-4 bg-gray-400 rounded-t-md font-bold text-2xl text-center">Order Summary</p>
         <!-- Dynamic calculations of total price -->
