@@ -66,7 +66,16 @@ function createCard(title, img, desc, price, id) {
   // IMPORTANT: Use setAttribute() to assign the product ID to a standard data attribute.
     card.querySelector(".add-cart-btn").setAttribute('data-product-id', id);
     card.querySelector(".details-btn").setAttribute('data-product-id', id);
-
+    // UPDATE existing cart status for the cart
+    if (localStorage.getItem("products-in-cart")) {
+      const productsInCart = JSON.parse(localStorage.getItem("products-in-cart"));
+      const productInCart = productsInCart.find(obj => obj.id === id);
+      if(productInCart !== undefined) {
+        const cartedProduct = card.querySelector(".add-cart-btn");
+        cartedProduct.textContent = "Added To Cart";
+        cartedProduct.disabled = true;
+      }
+    }
     // Add card to page
     document.getElementById("card-container").appendChild(card);
 }
@@ -130,7 +139,7 @@ function topViewOfList() {
   }
 }
 
-// funtion to update the no of products added to cart, gets the length of products in cart from local storage.
+// funtion to update the no of products already added to the cart, gets the length of products in cart from local storage.
 function updateCartCount () {
   const existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
   const cartValue = existingCartProducts.length;
@@ -199,6 +208,13 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         localStorage.setItem('products-in-cart',updatedCartProductsString);
         //cartProductsString += oldCartProductsString; // this is wrong.. json won't support this resulting data format, "[]"+"[]" = "[][]"
         
+        // change the state of "Add To Cart" button
+        let clickedButton = event.target;
+        clickedButton.disabled = true; // disable the clicked button
+        clickedButton.textContent = "Added to Cart";
+
+
+        // dynamically update cart icon
         let cartValue = existingCartProducts.length;
         let cartValueContainer = document.getElementById("products-in-cart");
         cartValueContainer.textContent = cartValue;

@@ -2,10 +2,12 @@ function updateCartCount () {
   const existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
   const cartValue = existingCartProducts.length;
   const cartValueContainer = document.getElementById("products-in-cart");
+  const cartValueContainerOrderSummary = document.getElementById("no-of-products-order-summary");
   cartValueContainer.textContent = cartValue;
+  cartValueContainerOrderSummary.textContent = cartValue;
 }
 updateCartCount();
-
+ 
 function createCardInCart(img, title, price) {
     // Get template content - containg the product card
     const template = document.getElementById("product-card-in-cart");
