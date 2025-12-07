@@ -63,7 +63,7 @@ function createCard(title, img, desc, price, id) {
     card.querySelector(".product-img").src = img;
     card.querySelector(".product-description").textContent = desc;
     card.querySelector(".product-price").textContent = "$ "+price;
-  // IMPORTANT: Use setAttribute() to assign the product ID to a standard data attribute.
+  // IMPORTANT: Use setAttribute() to assign the product ID to a standard data attribute, for linking with carted products in the local storage.
     card.querySelector(".add-cart-btn").setAttribute('data-product-id', id);
     card.querySelector(".details-btn").setAttribute('data-product-id', id);
     // UPDATE existing cart status for the cart
@@ -71,9 +71,36 @@ function createCard(title, img, desc, price, id) {
       const productsInCart = JSON.parse(localStorage.getItem("products-in-cart"));
       const productInCart = productsInCart.find(obj => obj.id === id);
       if(productInCart !== undefined) {
+        //update styling for 'Added To Cart' in button
         const cartedProduct = card.querySelector(".add-cart-btn");
         cartedProduct.textContent = "Added To Cart";
         cartedProduct.disabled = true;
+        cartedProduct.classList.add('bg-green-500');
+        //update data about quantity & pricing
+        let currentCard = card;
+        let unitsCount = currentCard.querySelector('.count-units');
+          unitsCount.textContent = productInCart.countUnits;
+          currentCard.querySelector('.multiply-symbol').textContent = "x";
+        let subTotal = currentCard.querySelector('.sub-total');
+          let result = productInCart.countUnits * productInCart.price;
+          subTotal.textContent = "$ "+result;
+        // enable item counter
+        // DYNAMIC UPDATE (card data): 
+        // DOM traversing to select the parent card (container) of clickedButton
+        if (currentCard) {
+          let unitsCount = currentCard.querySelector('.count-units');
+            unitsCount.textContent = productInCart.countUnits;
+            currentCard.querySelector('.multiply-symbol').textContent = "x";
+          let subTotal = currentCard.querySelector('.sub-total');
+            let result = productInCart.countUnits * productInCart.price;
+            subTotal.textContent = "$ "+result;
+          
+          // display counters in the card by removing the pre-styled class "hidden" 
+          let countUnitsContainer = currentCard.querySelector('.count-units-container');
+          countUnitsContainer.hidden = false;
+          let countUnitsInput = countUnitsContainer.querySelector('.count-units-input');
+          countUnitsInput.textContent = productInCart.countUnits;
+        }
       }
     }
     // Add card to page
@@ -88,7 +115,7 @@ function removeProducts() {
 
 // Function to Get all products, from external API, and send them to createCard function.
 let products = null;  // it works automatically, 
-      // as all products are already loaded before "Add To Cart" can be clicked.
+    // as all products are already loaded before "Add To Cart" can be clicked.
 // Define an async function
 async function getAllProducts() {
   // Now 'await' is allowed inside here
@@ -129,9 +156,8 @@ function topViewOfList() {
     // Calculate the desired final scroll position
     // window.scrollY gives current vertical position
     // We add the element's position (which might be negative if already scrolled past)
-    // and subtract the desired offset (120px)
+    // and subtract the desired offset (130px)
     const offsetPosition = elementPosition + window.scrollY - 130;
-    
     window.scrollTo({
       top: offsetPosition,
       behavior: 'smooth'
@@ -191,14 +217,15 @@ document.getElementById("card-container").addEventListener('click', (event) => {
     // Check if the element clicked (event.target) has the class 'add-cart-btn'
     if (event.target && event.target.classList.contains('add-cart-btn')) {
       // 'categoryValue' is a non-standard property you assigned, a better practice is to use a data attribute (data-product-id)
-
-      // const productId = parseInt(event.target.dataset.productId);  // another method to get id
+      // const productId = parseInt(event.target.dataset.productId);  // another method to get data-product-id
       const productId = parseInt(event.target.getAttribute('data-product-id'));
 
       // Use the globally available 'products' array to find the match
       const product = products.find(obj => obj.id === productId);
  
-      if (product) {
+      if (product) { 
+        // adding additional data to the selected product, to keep track of the number of units in the product's order.
+        product.countUnits = 1;
         // the existing products will be in json formatted objects as a single string "[{p1},{p2},{p3}..]"
         // so it's required to parse it's value into objects, as the data is fetched from the local storage
         let existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
@@ -207,19 +234,39 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         const updatedCartProductsString = JSON.stringify(existingCartProducts);
         localStorage.setItem('products-in-cart',updatedCartProductsString);
         //cartProductsString += oldCartProductsString; // this is wrong.. json won't support this resulting data format, "[]"+"[]" = "[][]"
-        
-        // change the state of "Add To Cart" button
+
+    //Dynamic Update : really exhausting me here
         let clickedButton = event.target;
+      // DYNAMIC UPDATE (card data): 
+        // DOM traversing to select the parent card (container) of clickedButton
+        let currentCard = clickedButton.closest('.product-card');
+        if (currentCard) {
+          let unitsCount = currentCard.querySelector('.count-units');
+            unitsCount.textContent = product.countUnits;
+            currentCard.querySelector('.multiply-symbol').textContent = "x";
+          let subTotal = currentCard.querySelector('.sub-total');
+            let result = product.countUnits * product.price;
+            subTotal.textContent = "$ "+result;
+          
+          // display counters in the card by removing the pre-styled class "hidden" 
+          let countUnitsContainer = currentCard.querySelector('.count-units-container');
+          countUnitsContainer.hidden = false;
+          let countUnitsInput = countUnitsContainer.querySelector('.count-units-input');
+          countUnitsInput.textContent = product.countUnits;
+        }
+
+      // DYNAMIC UPDATE (card styling):
+        // change the state of "Add To Cart" button
         clickedButton.disabled = true; // disable the clicked button
-        clickedButton.textContent = "Added to Cart";
-
-
-        // dynamically update cart icon
+        clickedButton.textContent = "Added to Cart"; 
+        //change background color of disabled button
+          //clickedButton.classList.remove('bg-black');
+        clickedButton.classList.add('bg-green-500');
+        // change the state of "cart(0)" icon in the header section of cart.html
         let cartValue = existingCartProducts.length;
         let cartValueContainer = document.getElementById("products-in-cart");
         cartValueContainer.textContent = cartValue;
-
-        let AddToCartButton = document.getElementsByClassName 
+       // let AddToCartButton = document.getElementsByClassName 
       } 
     }
   });
