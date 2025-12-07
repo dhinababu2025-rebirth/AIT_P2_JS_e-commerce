@@ -1,11 +1,25 @@
+
+
+// The codes in the following comments is throwing error, some kind of object confusion in local storage 
+    // this 'products' variable is meant to always contain the array of all products from the api.
+    // page reloads shouldn't nullify the existing data meant for this 'products' variable, 
+    // therefore the following condition is established,
+// declaring the products variable and initialising with local storage property
+// if(localStorage.getItem("all-products-from-api") !== null){
+//   const data = localStorage.getItem("all-products-from-api");
+//   products = JSON.parse(data);
+// } else {
+//   products = []; 
+//   localStorage.setItem("all-products-from-api",JSON.stringify(products));
+// }
+
+
 // Making product navigation hide/show based on scrollY direction
 let lastScrollY = window.scrollY;
 const productNavigation = document.getElementById('product-navigation');
-
 // Get the height of the main header/area above the product navigation (16 * 4 = 64px, assuming base 4px rem scale)
 // You might need to measure this more accurately if 'top-16' isn't precise enough
 const stickyLimit = 600; 
-
 window.addEventListener("scroll", () => {
     const currentScrollY = window.scrollY;
 
@@ -63,15 +77,18 @@ function removeProducts() {
   clrContainer.innerHTML = "";
 }
 
-// Function to Get all products, 
-  // from external API, and send them to createCard function.
-// 1. Define an async function
+// Function to Get all products, from external API, and send them to createCard function.
+let products = null;  // it works automatically, 
+      // as all products are already loaded before "Add To Cart" can be clicked.
+// Define an async function
 async function getAllProducts() {
   // Now 'await' is allowed inside here
   //reset the container
   removeProducts();
   // Step 1: Requesting the data
   const response = await fetch('https://fakestoreapi.com/products');
+      // connecting the variable named products with local storage to initialize it globally.
+  localStorage.setItem("all-products-from-api", response); 
   // Step 2: Parsing the stream
   const data = await response.json();
   products = data; 
@@ -88,12 +105,12 @@ async function getAllProducts() {
 function customProductList(categoryValue) {
   for (let product of products) { // Accesses memory to find all the keys and values in each object
     if(product.category === categoryValue) {
-      createCard(product.title, product.image, product.description, product.price);
+      createCard(product.title, product.image, product.description, product.price, product.id);
     }
   }
 }
 
-// Function
+// Function to show the customised product list from top 
 function topViewOfList() {
   const targetElement = document.getElementById('card-container');
   if (targetElement) {
@@ -113,10 +130,17 @@ function topViewOfList() {
   }
 }
 
+// funtion to update the no of products added to cart, gets the length of products in cart from local storage.
+function updateCartCount () {
+  const existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
+  const cartValue = existingCartProducts.length;
+  const cartValueContainer = document.getElementById("products-in-cart");
+  cartValueContainer.textContent = cartValue;
+}
 
 // Load all products on page load
- getAllProducts();
-
+getAllProducts();
+updateCartCount();
 // List the products based on customized options
 // All Products
   document.getElementById("all-products").addEventListener('click', () => {
@@ -150,10 +174,10 @@ function topViewOfList() {
   });
 
 
-  // ADD TO CART : 
+// ADD TO CART : 
     // 1, get the data-product-id of selected card
-    // 2, 
-// Attach one single listener to the static parent container
+    // 2, track no of products in cart, with a cart-value key in local storage
+    // 3, Attach one single listener to the static parent container
 document.getElementById("card-container").addEventListener('click', (event) => {
     // Check if the element clicked (event.target) has the class 'add-cart-btn'
     if (event.target && event.target.classList.contains('add-cart-btn')) {
@@ -174,9 +198,13 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         const updatedCartProductsString = JSON.stringify(existingCartProducts);
         localStorage.setItem('products-in-cart',updatedCartProductsString);
         //cartProductsString += oldCartProductsString; // this is wrong.. json won't support this resulting data format, "[]"+"[]" = "[][]"
+        
+        let cartValue = existingCartProducts.length;
+        let cartValueContainer = document.getElementById("products-in-cart");
+        cartValueContainer.textContent = cartValue;
+
+        let AddToCartButton = document.getElementsByClassName 
       } 
-        console.log(`Added product ${productId} to cart.`);
-      
     }
   });
 

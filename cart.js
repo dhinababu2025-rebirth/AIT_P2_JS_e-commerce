@@ -1,3 +1,11 @@
+function updateCartCount () {
+  const existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
+  const cartValue = existingCartProducts.length;
+  const cartValueContainer = document.getElementById("products-in-cart");
+  cartValueContainer.textContent = cartValue;
+}
+updateCartCount();
+
 function createCardInCart(img, title, price) {
     // Get template content - containg the product card
     const template = document.getElementById("product-card-in-cart");
@@ -23,12 +31,10 @@ function removeCartProducts() {
 }
 
 // --- Main Logic to Load Cart on Page Load ---
-
 // Use DOMContentLoaded to ensure the container and template exist before running the logic
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Retrieve the JSON string from localStorage
     const storedCartString = localStorage.getItem('products-in-cart');
-
     const cartContainer = document.getElementById("products-in-cart-container");
 
     if (storedCartString && cartContainer) {
