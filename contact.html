@@ -8,21 +8,32 @@
     <link rel="icon" href="./images/logo-eCom.png" type="image/png">
 </head>
 <body>
-<header id="main-header" class="fixed top-0 left-0 w-full z-50 flex justify-between p-4 bg-white transition-transform duration-300">
-    <div>
-        <a href="./index.html" class="header-items font-extrabold text-2xl">eCommerce</a>
-    </div>
-    <nav>
-        <a href="./index.html" id="home-link" class="header-items">Home</a>
-        <a href="./product.html" id="products-link" class="header-items">Products</a>
-        <a href="./about.html" id="about-link" class="header-items">About</a>
-        <a href="./contact.html" id="contact-link" class="header-items">Contact</a>
-    </nav>
-    <div>
-        <a href="./login.html" class="header-items border rounded-md"><i class="fa-solid fa-user"></i> <span class="max-md:hidden max-sm:hidden"> Login</span></a>
-        <a href="./register.html" class="header-items border rounded-md"><i class="fa-solid fa-user-plus"></i> <span class="max-md:hidden max-sm:hidden"> Register</span></a>
-        <a href="./cart.html" class="header-items border rounded-md"><i class="fa-solid fa-cart-shopping"></i> <span class="max-md:hidden max-sm:hidden"> Cart </span>(<span id="products-in-cart">0</span>)</a>
-    </div>
+<header id="main-header" 
+        class="bottom-shade fixed top-0 left-0 w-full z-50 p-4 max-sm:p-1 bg-white flex justify-between max-sm:flex-col">
+    <!-- main header: column 1 -->
+        <div class="max-sm:justify-self-center pb-2 text-center">
+            <a href="./index.html" class="header-items font-extrabold text-2xl">eCommerce</a>
+        </div>
+    <!-- main header: column 2 -->
+        <nav class="max-sm:hidden text-center pt-2">
+            <a href="./index.html" id="home-link" class="header-items">Home</a>
+            <a href="./product.html" id="products-link" class="header-items">Products</a>
+            <a href="./about.html" id="about-link" class="header-items">About</a>
+            <a href="./contact.html" id="contact-link" class="header-items">Contact</a>
+        </nav>
+    <!-- main header: column 3 -->
+        <div class="flex justify-between">
+            <button id="mobile-menu-btn" onclick="toggleSidebar()" class="hidden max-sm:block p-1 max-sm:w-1/4">
+                <i class="fa-solid fa-list border text-2xl rounded-md"></i>
+            </button>
+            <div class="max-sm:w-3/4 flex justify-end">
+                <a href="./login.html" class="header-items border rounded-md"><i class="fa-solid fa-user"></i> <span class="max-md:hidden max-sm:hidden"> Login</span></a>
+                <a href="./register.html" class="header-items border rounded-md"><i class="fa-solid fa-user-plus"></i> <span class="max-md:hidden max-sm:hidden"> Register</span></a>
+                <a href="./cart.html" class="header-items border rounded-md"><i class="fa-solid fa-cart-shopping"></i> <span class="max-md:hidden max-sm:hidden"> Cart </span>(<span id="products-in-cart">0</span>)</a>
+            </div>
+        </div>
+    
+</div>
 </header>
 
 
@@ -34,7 +45,28 @@
 <!-- <footer class="bg-green-500 h-96">
 
 </footer> -->
+<!-- mobile menu bar -->
+ <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="toggleSidebar()"></div>
+
+<aside id="mobile-sidebar" class="fixed top-0 left-0 z-50 h-screen w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out">
+    
+    <div class="flex items-center justify-between p-4 border-b">
+        <span class="font-bold text-lg">Menu</span>
+        <button onclick="toggleSidebar()" class="text-gray-500 hover:text-red-500">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+
+    <nav class="p-4 space-y-2">
+        <a href="./index.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded">Home</a>
+        <a href="./product.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded">Products</a>
+        <a href="./about.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded">About</a>
+        <a href="./contact.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded">Contact</a>
+    </nav>
+</aside>
 <script src="https://kit.fontawesome.com/d314a677b2.js" crossorigin="anonymous"></script>
-<script src="./script.js"></script>
+<!-- <script src="./script.js"></script> -->
+<script src="./header.js"></script>
+
 </body>
 </html>
