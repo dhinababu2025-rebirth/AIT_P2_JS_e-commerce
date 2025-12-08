@@ -5,6 +5,7 @@ function updateCartCount () {
   const cartValueContainerOrderSummary = document.getElementById("no-of-products-order-summary");
   cartValueContainer.textContent = cartValue;
   cartValueContainerOrderSummary.textContent = cartValue;
+  summarizeOrder();
 }
 updateCartCount();
  
@@ -25,6 +26,8 @@ function createCardInCart(img, title, price, id, countUnits) {
     card.querySelector(".increase-product-quantity").setAttribute('data-product-id', id);
     // Add card to page
     document.getElementById("card-container").appendChild(card);
+
+    summarizeOrder();
 }
 
 
@@ -37,6 +40,33 @@ function removeCartProducts() {
   }
 }
 
+// DYNAMIC UPDATE ORDER SUMMARY
+function summarizeOrder() {
+    const newCollectionString = localStorage.getItem('products-in-cart'); 
+    let updatedProductsInCart = JSON.parse(newCollectionString) || [];
+
+        // Calculate the total no of items, all products combined
+        const itemsTotal = updatedProductsInCart.reduce((accumulator, currentObject) => {
+            return accumulator + currentObject.countUnits;
+        }, 0); // The '0' is the initial value of the accumulator
+        const itemsInOrderSummary = document.getElementById('combined-no-of-items-in-cart');
+        if(itemsInOrderSummary) itemsInOrderSummary.textContent = itemsTotal;
+
+        // Calculate the total no of items, all products combined
+        const costOfAllProducts = updatedProductsInCart.reduce((accumulator, currentObject) => {
+            return accumulator + (currentObject.price * currentObject.countUnits);
+        }, 0); // The '0' is the initial value of the accumulator
+        const priceOfAllOrdersInCart = document.getElementById('price-of-all-orders-in-cart');
+        if(priceOfAllOrdersInCart) priceOfAllOrdersInCart.textContent = "$ "+costOfAllProducts.toFixed(2);
+
+        // Calculate the total no of items, all products combined
+        const shippingCost = 30;
+        const grandTotal = document.getElementById('grand-total');
+        if(grandTotal) grandTotal.textContent = "$ "+(costOfAllProducts===0?0:(shippingCost + costOfAllProducts).toFixed(2));
+}
+
+summarizeOrder();
+    
 // --- Main Logic to Load Cart on Page Load ---
 // Use DOMContentLoaded to ensure the container and template exist before running the logic
 document.addEventListener('DOMContentLoaded', () => {

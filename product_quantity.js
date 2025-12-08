@@ -152,12 +152,12 @@ container[0].addEventListener('click', (event) => {
             return accumulator + (currentObject.price * currentObject.countUnits);
         }, 0); // The '0' is the initial value of the accumulator
         const priceOfAllOrdersInCart = document.getElementById('price-of-all-orders-in-cart');
-        if(priceOfAllOrdersInCart) priceOfAllOrdersInCart.textContent = "$ "+costOfAllProducts;
+        if(priceOfAllOrdersInCart) priceOfAllOrdersInCart.textContent = "$ "+costOfAllProducts.toFixed(2);
 
         // Calculate the total no of items, all products combined
         const shippingCost = 30;
         const grandTotal = document.getElementById('grand-total');
-        if(grandTotal) grandTotal.textContent = "$ "+(shippingCost + costOfAllProducts);
+        if(grandTotal) grandTotal.textContent = "$ "+(costOfAllProducts===0?0:(shippingCost + costOfAllProducts).toFixed(2));
     
 });
 // }
