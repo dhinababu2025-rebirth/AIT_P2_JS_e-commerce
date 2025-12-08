@@ -87,20 +87,22 @@ function createCard(title, img, desc, price, id) {
         // enable item counter
         // DYNAMIC UPDATE (card data): 
         // DOM traversing to select the parent card (container) of clickedButton
-        if (currentCard) {
-          let unitsCount = currentCard.querySelector('.count-units');
-            unitsCount.textContent = productInCart.countUnits;
-            currentCard.querySelector('.multiply-symbol').textContent = "x";
-          let subTotal = currentCard.querySelector('.sub-total');
-            let result = productInCart.countUnits * productInCart.price;
-            subTotal.textContent = "$ "+result;
+        
+          //let unitsCount = currentCard.querySelector('.count-units');
+           // unitsCount.textContent = productInCart.countUnits;
+           // currentCard.querySelector('.multiply-symbol').textContent = "x";
+          //let subTotal = currentCard.querySelector('.sub-total');
+           // let result = productInCart.countUnits * productInCart.price;
+           // subTotal.textContent = "$ "+result;
           
           // display counters in the card by removing the pre-styled class "hidden" 
           let countUnitsContainer = currentCard.querySelector('.count-units-container');
           countUnitsContainer.hidden = false;
+          card.querySelector(".decrease-product-quantity").setAttribute('data-product-id', productInCart.id);
+          card.querySelector(".increase-product-quantity").setAttribute('data-product-id', productInCart.id);
           let countUnitsInput = countUnitsContainer.querySelector('.count-units-input');
           countUnitsInput.textContent = productInCart.countUnits;
-        }
+        
       }
     }
     // Add card to page
@@ -253,6 +255,8 @@ document.getElementById("card-container").addEventListener('click', (event) => {
           countUnitsContainer.hidden = false;
           let countUnitsInput = countUnitsContainer.querySelector('.count-units-input');
           countUnitsInput.textContent = product.countUnits;
+          currentCard.querySelector(".decrease-product-quantity").setAttribute('data-product-id', product.id);
+          currentCard.querySelector(".increase-product-quantity").setAttribute('data-product-id', product.id);
         }
 
       // DYNAMIC UPDATE (card styling):

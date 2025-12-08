@@ -43,7 +43,7 @@
 
 <!-- Card Template to list products in the Cart - targeted for div{id: cart-container} -->
 <template id="product-card-in-cart">
-    <div class="flex justify-evenly max-sm:flex-col p-2 h-fit">
+    <div class="product-card flex justify-evenly max-sm:flex-col p-2 h-fit">
         <!-- Product image and title -->
         <div class="flex justify-evenly w-8/12 max-sm:w-full">
             <div class="w-1/5">
@@ -58,19 +58,24 @@
             <!-- product quantity -->
             <div class="flex justify-around items-center max-sm:order-2">
                 <button class="decrease-product-quantity bg-amber-700 hover:bg-amber-950 rounded-md text-white px-4 pb-1 mx-1 h-fit text-center text-2xl">-</button>
-                <p class="qty-of-current-product font-bold text-2xl mx-1 my-0">0</p>
+                <p class="count-units-input font-bold text-2xl mx-1 my-0">0</p>
                 <button class="increase-product-quantity bg-cyan-700 hover:bg-lime-950 rounded-md text-white px-4 pb-1 mx-1 h-fit text-2xl">+</button>
             </div>
             <!-- product price -->
-            <div class="flex justify-center max-sm:order-1"> 
-                <p class="qty-of-current-product font-bold text-slate-600">
-                0    <!-- no of units of the selected product -->
-                </p>
-                <!-- <p> * </p>  -->
-                <p class="unit-price-of-current-product font-bold">
-                    price
-                </p>
-            </div>
+            <div class="flex flex-col justify-center max-sm:order-1"> 
+                <div class="flex justify-center">
+                    <p class="qty-of-current-product px-2 font-bold text-slate-600">
+                    0    <!-- no of units of the selected product -->
+                    </p>
+                    <!-- <p> * </p>  -->
+                    <p class="unit-price-of-current-product font-bold">
+                        price
+                    </p>
+                </div>
+                <div class="sub-total text-gray-500 text-center">
+                    
+                </div>
+            </div> 
         </div>
     </div>
     <hr class="border border-gray-300 w-4/5 m-4 place-self-center">
@@ -83,7 +88,7 @@
         <!-- Table heading: Items List -->
         <p class="py-6 px-4 bg-gray-400 rounded-t-md font-bold text-2xl text-center">Item List</p>
 <!-- Container to dynamically hold the cart items -->
-        <div id="products-in-cart-container" class="border border-gray-400 rounded-b-md h-fit mb-4">
+        <div id="card-container" class="card-container border border-gray-400 rounded-b-md h-fit mb-4">
 
         </div>
     </div>
@@ -125,6 +130,7 @@
 <!-- <script src="./script.js"></script> -->
 <script src="./cart.js"></script>
 <script src="./header.js"></script>
+<script src="./product_quantity.js"></script>
 
 </body>
 </html>
