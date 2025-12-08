@@ -244,20 +244,21 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         let currentCard = clickedButton.closest('.product-card');
         if (currentCard) {
           let unitsCount = currentCard.querySelector('.count-units');
-            unitsCount.textContent = product.countUnits;
+            if (unitsCount) unitsCount.textContent = product.countUnits;
+          let productPrice = currentCard.querySelector('.product-price');
+            if (productPrice) productPrice.textContent = product.price;
             currentCard.querySelector('.multiply-symbol').textContent = "x";
           let subTotal = currentCard.querySelector('.sub-total');
-            let result = product.countUnits * product.price;
-            subTotal.textContent = "$ "+result;
-          
+            if (subTotal) subTotal.textContent = "$ "+(product.countUnits * product.price).toFixed(2);
           // display counters in the card by removing the pre-styled class "hidden" 
           let countUnitsContainer = currentCard.querySelector('.count-units-container');
-          countUnitsContainer.hidden = false;
-          let countUnitsInput = countUnitsContainer.querySelector('.count-units-input');
-          countUnitsInput.textContent = product.countUnits;
+            countUnitsContainer.hidden = false;
+          let countUnitsInput = currentCard.querySelector('.count-units-input');
+            if (countUnitsInput) countUnitsInput.textContent = product.countUnits;
+            }
           currentCard.querySelector(".decrease-product-quantity").setAttribute('data-product-id', product.id);
           currentCard.querySelector(".increase-product-quantity").setAttribute('data-product-id', product.id);
-        }
+        
 
       // DYNAMIC UPDATE (card styling):
         // change the state of "Add To Cart" button
@@ -271,7 +272,8 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         let cartValueContainer = document.getElementById("products-in-cart");
         cartValueContainer.textContent = cartValue;
        // let AddToCartButton = document.getElementsByClassName 
-      } 
+       console.log("Add to Cart complete");
+        }
     }
   });
 

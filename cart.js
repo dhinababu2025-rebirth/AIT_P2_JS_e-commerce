@@ -17,6 +17,8 @@ function createCardInCart(img, title, price, id, countUnits) {
     card.querySelector(".product-image-in-cart").src = img;
     card.querySelector(".product-title-in-cart").textContent = title;
     card.querySelector('.qty-of-current-product').textContent = countUnits+"  x  ";
+    card.querySelector('.sub-total').textContent = " $ "+countUnits*price;
+    card.querySelector('.count-units-input').textContent = countUnits;
     // card.querySelector(".product-description").textContent = desc;
     card.querySelector(".unit-price-of-current-product").textContent = " $"+price;
     card.querySelector(".decrease-product-quantity").setAttribute('data-product-id', id);
