@@ -37,6 +37,9 @@ container[0].addEventListener('click', (event) => {
                 if (productPrice) productPrice.textContent = "$ "+productInCart.price;
                 // ... other updates ...
 
+                let qtyOfCurrentProduct = currentCard.querySelector('.qty-of-current-product');
+                if (qtyOfCurrentProduct) qtyOfCurrentProduct.textContent = productInCart.countUnits+"  x  ";
+
                 let countUnitsInput = currentCard.querySelector('.count-units-input');
                 if (countUnitsInput) countUnitsInput.textContent = productInCart.countUnits;
             }
@@ -110,12 +113,18 @@ container[0].addEventListener('click', (event) => {
 
             if (currentCard) {
                 // ... (rest of your DOM update logic with safety checks) ...
-                let countUnitsContainer = currentCard.querySelector('.count-units');
-                if (countUnitsContainer) countUnitsContainer.textContent = productInCart.countUnits;
-                
+                let countUnits = currentCard.querySelector('.count-units');
+                if (countUnits) countUnits.textContent = productInCart.countUnits;
+
                 let subTotal = currentCard.querySelector('.sub-total');
                 if (subTotal) subTotal.textContent = "$ "+(productInCart.countUnits * productInCart.price).toFixed(2);
+                
+                let productPrice = currentCard.querySelector('.product-price');
+                if (productPrice) productPrice.textContent = "$ "+productInCart.price;
                 // ... other updates ...
+
+                let qtyOfCurrentProduct = currentCard.querySelector('.qty-of-current-product');
+                if (qtyOfCurrentProduct) qtyOfCurrentProduct.textContent = productInCart.countUnits+"  x  ";
 
                 let countUnitsInput = currentCard.querySelector('.count-units-input');
                 if (countUnitsInput) countUnitsInput.textContent = productInCart.countUnits;
