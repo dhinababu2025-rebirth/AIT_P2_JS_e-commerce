@@ -134,6 +134,31 @@ container[0].addEventListener('click', (event) => {
             localStorage.setItem("products-in-cart", JSON.stringify(productsInCart));
         }
     }
+
+
+// DYNAMIC UPDATE ORDER SUMMARY
+    const newCollectionString = localStorage.getItem('products-in-cart'); 
+        let updatedProductsInCart = JSON.parse(newCollectionString) || [];
+
+        // Calculate the total no of items, all products combined
+        const itemsTotal = updatedProductsInCart.reduce((accumulator, currentObject) => {
+            return accumulator + currentObject.countUnits;
+        }, 0); // The '0' is the initial value of the accumulator
+        const itemsInOrderSummary = document.getElementById('combined-no-of-items-in-cart');
+        if(itemsInOrderSummary) itemsInOrderSummary.textContent = itemsTotal;
+
+        // Calculate the total no of items, all products combined
+        const costOfAllProducts = updatedProductsInCart.reduce((accumulator, currentObject) => {
+            return accumulator + (currentObject.price * currentObject.countUnits);
+        }, 0); // The '0' is the initial value of the accumulator
+        const priceOfAllOrdersInCart = document.getElementById('price-of-all-orders-in-cart');
+        if(priceOfAllOrdersInCart) priceOfAllOrdersInCart.textContent = "$ "+costOfAllProducts;
+
+        // Calculate the total no of items, all products combined
+        const shippingCost = 30;
+        const grandTotal = document.getElementById('grand-total');
+        if(grandTotal) grandTotal.textContent = "$ "+(shippingCost + costOfAllProducts);
+    
 });
 // }
 
