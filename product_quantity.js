@@ -1,4 +1,10 @@
 
+function updateCartCount () {
+  const existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
+  const cartValue = existingCartProducts.length;
+  const cartValueContainer = document.getElementById("products-in-cart");
+  cartValueContainer.textContent = cartValue;
+}
 
 // --- EVENT LISTENER FOR DECREMENT BUTTONS  ---
 // for(let i=0; i<2; i++) {
@@ -81,7 +87,7 @@ console.log("Products in Cart: "+productsInCart);
                 const removeProductUsingId = productId;
                 productsInCart = productsInCart.filter((item) => item.id !== removeProductUsingId);
                 localStorage.setItem("products-in-cart", JSON.stringify(productsInCart));
-
+                updateCartCount();
                 // removing the card in order summary
                 if (currentCard.classList.contains('product-card-in-cart')) currentCard.remove();
 
