@@ -233,7 +233,7 @@ document.getElementById("card-container").addEventListener('click', (event) => {
         let existingCartProducts = JSON.parse(localStorage.getItem('products-in-cart')) || [];
         // Adding the newly selected product object into the array of existing products in the cart
         existingCartProducts.push(product);
-        const updatedCartProductsString = JSON.stringify(existingCartProducts);
+        let updatedCartProductsString = JSON.stringify(existingCartProducts);
         localStorage.setItem('products-in-cart',updatedCartProductsString);
         //cartProductsString += oldCartProductsString; // this is wrong.. json won't support this resulting data format, "[]"+"[]" = "[][]"
 
@@ -258,7 +258,9 @@ document.getElementById("card-container").addEventListener('click', (event) => {
             }
           currentCard.querySelector(".decrease-product-quantity").setAttribute('data-product-id', product.id);
           currentCard.querySelector(".increase-product-quantity").setAttribute('data-product-id', product.id);
-        
+         //existingCartProducts.push(product);
+          updatedCartProductsString = JSON.stringify(existingCartProducts);
+          localStorage.setItem('products-in-cart',updatedCartProductsString);
 
       // DYNAMIC UPDATE (card styling):
         // change the state of "Add To Cart" button
